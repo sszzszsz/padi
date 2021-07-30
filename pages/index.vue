@@ -4,7 +4,7 @@
       <div class="cont">
         <h1>
           PADI
-          <span>~open water~</span>
+          <span>- open water試験対策 -</span>
         </h1>
         <ul>
           <li>
@@ -124,6 +124,8 @@ export default {
 h1 {
   margin-bottom: 20px;
   color: #123d6b;
+  background: #ffffff80;
+  padding: 10px;
   text-shadow: 0px 0px 1px #daebff;
   span {
     font-size: 50%;

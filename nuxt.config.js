@@ -5,15 +5,19 @@ import globImporter from 'node-sass-glob-importer'
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
-
+  htmlAttrs: {
+    lang: 'ja',
+    prefix: 'og: http://ogp.me/ns#'
+  },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'PADI',
+    title: 'PADI オープンウォーター試験対策クイズ',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '' },
-      { name: 'format-detection', content: 'telephone=no' }
+      { name: 'format-detection', content: 'telephone=no' },
+      { hid: 'description', name: 'description', content: 'PADIオープンウォーター試験対策のクイズです' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }

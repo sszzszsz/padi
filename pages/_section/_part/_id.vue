@@ -5,15 +5,19 @@
       <span class="part">PART {{ questionData.part }}</span>
     </h1>
     <main class="cont">
+      <p class="progress_txt">
+        {{ partData.length }}問中 {{ $route.params.id }}問目
+      </p>
       <div class="container">
         <ul class="progress_list row">
           <li
             v-for="n in partData.length"
             :key="n"
-            class="col"
+            class="col px-0"
             :class="n <= questionData.num ? 'is-active' : ''"
           >
             {{ n }}
+            <IconFish />
           </li>
         </ul>
       </div>
@@ -55,6 +59,7 @@
       <b-button
         block
         :variant="`outline-dark`"
+        class="check-btn"
         @click="chekckAnsswer(), dispAnswer()"
       >
         <span>回答をチェック</span>
@@ -224,24 +229,32 @@ export default {
 .inr {
   display: grid;
   flex-direction: column;
-  /* justify-content: space-between; */
   min-height: 100vh;
   width: 100%;
-  grid-template-rows: 120px auto auto;
+  grid-template-rows: 120px auto 110px;
 }
-.progress_list {
+.progress {
+  &_txt {
+    font-size: 14px;
+    margin: 0;
+  }
+  &_list {
   li {
     font-size: 0;
-    height: 8px;
-    background: #a1a1a1;
-    box-shadow: 0 1px 2px #a5a5a5;
     margin: 0 3px;
-    transform: skewX(-45deg);
-    max-width: 50px;
+    max-width: 34px;
+    text-align: center;
+    /deep/ path {
+      fill: #a1a1a1;
+    }
     &.is-active {
-      background: #123d6b;
+      // background: #123d6b;
+      /deep/ path {
+        fill: #123d6b;
+      }
     }
   }
+}
 }
 .section0 {
   h1 {
@@ -312,30 +325,13 @@ h1 {
     opacity: 0.4;
   }
 }
-h2 {
-  position: relative;
-  font-size: 24px;
-  line-height: 1.2;
-  margin-bottom: 20px;
-  span {
-    display: inline-block;
-    margin-left: 10px;
-  }
-  &:after {
-    content: "";
-    display: inline-block;
-    width: 5px;
-    height: 75%;
-    position: absolute;
-    top: 18%;
-    left: 0;
-    bottom: 0;
-    background: #123d6b;
-  }
-}
 
 h3 {
   font-size: 18px;
+  border-left: 6px solid #113d6b;
+  /* border-bottom: 2px solid #113d6b; */
+  padding: 0 0 4px 8px;
+  margin: 20px auto;
 }
 
 .select_list {
@@ -343,15 +339,28 @@ h3 {
     margin-bottom: 8px;
   }
 }
-
+.check-btn {
+  padding: 15px;
+  &:hover {
+    background: inherit;
+    color: inherit;
+  }
+}
 .btn-list {
   button {
     padding: 0;
+    &:hover {
+      background: inherit;
+      color: inherit;
+    }
     a {
       position: relative;
       display: block;
       width: 100%;
       padding: 10px;
+      &:hover {
+        text-decoration: none;
+      }
     }
   }
 }

@@ -160,6 +160,7 @@ export default {
     },
     chekckAnsswer () {
       console.log('chekckAnsswer')
+      const THIS = this
       if (!this.questionData.multi) {
         this.correctFlag =
           this.selected === this.questionData.answer
@@ -169,9 +170,19 @@ export default {
               : 'false'
       } else {
         this.questionData.answerList = this.questionData.answer.split(',')
-        this.selected.forEach((item) => {
-          this.questionData.answerList.include(item)
-        })
+        const temp = []
+        if (this.selecteds.length > 0) {
+          this.selecteds.forEach((item) => {
+            temp.push(THIS.questionData.answerList.includes(item))
+          })
+        }
+        this.correctFlag = this.selecteds === ''
+          ? 'null'
+          : temp.includes(false)
+            ? 'false'
+            : temp.length === this.questionData.answerList.length
+              ? 'true'
+              : 'false'
       }
     },
     getPrevLink () {
@@ -239,22 +250,22 @@ export default {
     margin: 0;
   }
   &_list {
-  li {
-    font-size: 0;
-    margin: 0 3px;
-    max-width: 34px;
-    text-align: center;
-    /deep/ path {
-      fill: #a1a1a1;
-    }
-    &.is-active {
-      // background: #123d6b;
+    li {
+      font-size: 0;
+      margin: 0 3px;
+      max-width: 34px;
+      text-align: center;
       /deep/ path {
-        fill: #123d6b;
+        fill: #a1a1a1;
+      }
+      &.is-active {
+        // background: #123d6b;
+        /deep/ path {
+          fill: #123d6b;
+        }
       }
     }
   }
-}
 }
 .section0 {
   h1 {

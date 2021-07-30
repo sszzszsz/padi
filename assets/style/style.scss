@@ -1,0 +1,50 @@
+@import '~bootstrap/scss/bootstrap';
+
+// Define variable defaults
+$body-bg: #000;
+$body-color: #111;
+
+// breakPoint
+$breakpoints: ('sm': 'screen and (min-width: 320px)',
+  'md': 'screen and (min-width: 768px)',
+  'xl': 'screen and (min-width: 1024px)',
+) !default;
+
+// media Query
+// 835px default
+@mixin mq($breakpoint: md) {
+  @media #{map-get($breakpoints, $breakpoint)} {
+    @content;
+  }
+}
+a {
+  color: #123d6b;
+}
+.wrap {
+  width: 100%;
+  font-family: 'Noto Sans JP', sans-serif;
+  position: relative;
+  min-height: 100vh;
+
+  button {
+    a {
+      color: inherit;
+    }
+  }
+}
+.cont {
+  padding: 0 10px;
+  @include mq {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  &--full {
+    width: 100%;
+    padding: 0;
+    @include mq {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+  }
+}

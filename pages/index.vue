@@ -1,12 +1,12 @@
 <template>
   <div class="inr">
-    <div>
+    <div class="main">
+      <h1>
+        PADI
+        <span>- open water試験対策 -</span>
+      </h1>
       <div class="cont">
-        <h1>
-          PADI
-          <span>- open water試験対策 -</span>
-        </h1>
-        <ul>
+        <ul class="card-list">
           <li>
             <TopCard
               ttl="Introduction"
@@ -115,11 +115,32 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../assets/style/setting";
+.wrap {
+}
 .inr {
   background: url(~@/assets/img/9030156.jpeg) no-repeat;
   background-size: cover;
-  padding: 10px 0 0px;
+  padding: 0px 0 0px;
   background-position: 80% 100%;
+    &:after {
+    content: "";
+    display: block;
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    height: 100%;
+    background: #0057b5;
+    opacity: 0.4;
+  }
+}
+.main,
+footer {
+  position: relative;
+  z-index: 2;
 }
 h1 {
   margin-bottom: 20px;
@@ -133,8 +154,16 @@ h1 {
 }
 
 ul {
+  @include mq {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
   li {
-    margin-bottom: 20px;
+    margin: 20px auto;
+    @include mq {
+      min-width: 450px;
+    }
   }
 }
 </style>

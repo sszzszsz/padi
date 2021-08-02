@@ -25,14 +25,14 @@
       </b-button>
       <b-collapse :id="section" class="pl-2 pr-2">
         <ul class="container pt-2">
-          <li v-for="n in partLen" :key="n" class="row mt-2 tc__part-row">
-            <span class="col-3 px-0"> パート{{ n }} </span>
-            <span class="col-4 px-0">(合計：{{ partList[n].length }}問)</span>
-            <span class="col text-right tc__part-link">
-              <NuxtLink :to="`/${section}/part${n}/1`" class="">
+          <li v-for="n in partLen" :key="n" class="mt-2">
+            <NuxtLink :to="`/${section}/part${n}/1`" class="row tc__part-row">
+              <span class="col-3 px-0"> パート{{ n }} </span>
+              <span class="col-4 px-0">(合計：{{ partList[n].length }}問)</span>
+              <span class="col text-right tc__part-link">
                 はじめる
-              </NuxtLink>
-            </span>
+              </span>
+            </NuxtLink>
           </li>
         </ul>
       </b-collapse>
@@ -146,7 +146,7 @@ button {
   }
   &__part-row {
     font-size: 14px;
-    padding-bottom: 2px;
+    padding: 2px 0 4px;
     border-bottom: 1px solid #ddd;
   }
   &__part-link {

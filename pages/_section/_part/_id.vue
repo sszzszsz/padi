@@ -1,8 +1,10 @@
 <template>
   <div class="inr" :class="`${$route.params.section}`">
     <h1>
-      <span>SECTION {{ questionData.section }}</span>
-      <span class="part">PART {{ questionData.part }}</span>
+      <span class="ttl-inr">
+        <span>SECTION {{ questionData.section }}</span>
+        <span class="part">PART {{ questionData.part }}</span>
+      </span>
     </h1>
     <main class="cont">
       <p class="progress_txt">
@@ -30,7 +32,12 @@
         <b-form-checkbox-group v-model="selecteds">
           <ul class="select_list">
             <li v-for="(select, index) in questionData.select" :key="select.id">
-              <b-form-checkbox :value="alphabets[index]" :class="index">
+              <b-form-checkbox
+                class="select_btn"
+                :value="alphabets[index]"
+                :class="index"
+                :data-text="select"
+              >
                 {{ select }}
               </b-form-checkbox>
             </li>
@@ -45,9 +52,11 @@
             <li v-for="(select, index) in questionData.select" :key="select.id">
               <b-form-radio
                 v-model="selected"
+                class="select_btn"
                 :value="alphabets[index]"
                 :class="index"
-                @change="hideAnswer()"
+                :data-text="select"
+                @change="chekckAnsswer()"
               >
                 {{ select }}
               </b-form-radio>
@@ -68,9 +77,18 @@
       <div v-if="answerDispFlag" class="pt-3">
         <div v-if="correctFlag === 'true'">
           <p>正解です。</p>
+          <p class="mt-2">
+            {{ questionData.comment }}
+          </p>
         </div>
         <div v-else-if="correctFlag === 'false'">
-          <p>ハズレです。</p>
+          <p>
+            ハズレです。<br>
+            正解は【{{ answerText }}】です。
+          </p>
+          <p class="mt-2">
+            {{ questionData.comment }}
+          </p>
         </div>
         <div v-else-if="correctFlag === 'null'">
           <p>選択されていません。</p>
@@ -113,14 +131,29 @@ export default {
       selected: '',
       alphabets: ['A', 'B', 'C', 'D'],
       correctFlag: 'false',
-      answerDispFlag: false
+      answerDispFlag: false,
+      answerText: ''
     }
+  },
+  computed: {
+    // answerText: () => {
+    //   console.log(this)
+    //   const answerId = this.questionData.answer
+    //   const btnList = document.querySelectorAll('.select_btn')
+    //   btnList.forEach((item) => {
+    //     if (item.getAttribute('value') === answerId) {
+    //       return item.getAttribute('data-text')
+    //     }
+    //   })
+    // }
   },
   created () {
     this.getPartData()
     this.getquestionData()
   },
-  mounted () {},
+  mounted () {
+    this.getText()
+  },
   methods: {
     getPartData () {
       const THIS = this
@@ -158,6 +191,16 @@ export default {
         this.answerDispFlag = true
       }
     },
+    getText () {
+      console.log('getText')
+      const answerId = this.questionData.answer
+      const btnList = document.querySelectorAll('.select_btn > input')
+      btnList.forEach((item) => {
+        if (item.getAttribute('value') === answerId) {
+          this.answerText = item.getAttribute('data-text')
+        }
+      })
+    },
     chekckAnsswer () {
       console.log('chekckAnsswer')
       const THIS = this
@@ -176,13 +219,14 @@ export default {
             temp.push(THIS.questionData.answerList.includes(item))
           })
         }
-        this.correctFlag = this.selecteds === ''
-          ? 'null'
-          : temp.includes(false)
-            ? 'false'
-            : temp.length === this.questionData.answerList.length
-              ? 'true'
-              : 'false'
+        this.correctFlag =
+          this.selecteds === ''
+            ? 'null'
+            : temp.includes(false)
+              ? 'false'
+              : temp.length === this.questionData.answerList.length
+                ? 'true'
+                : 'false'
       }
     },
     getPrevLink () {
@@ -279,6 +323,18 @@ export default {
     }
   }
 }
+.section1 {
+  h1 {
+    background: var(--primary);
+    background: url("~@/assets/img/1604947.jpeg") no-repeat;
+    background-size: cover;
+    background-position: center right;
+    &:after {
+      background: #000;
+      opacity: 0.4;
+    }
+  }
+}
 .section2 {
   h1 {
     background: var(--primary);
@@ -291,14 +347,38 @@ export default {
     }
   }
 }
-.section1 {
+.section3 {
   h1 {
     background: var(--primary);
-    background: url("~@/assets/img/1604947.jpeg") no-repeat;
+    background: url("~@/assets/img/DSC1463.jpeg") no-repeat;
     background-size: cover;
-    background-position: center right;
+    background-position: 40% 60%;
     &:after {
-      background: #000;
+      background: #171b52;
+      opacity: 0.4;
+    }
+  }
+}
+.section4 {
+  h1 {
+    background: var(--primary);
+    background: url("~@/assets/img/aIMG_1665.jpeg") no-repeat;
+    background-size: cover;
+    background-position: 0% 50%;
+    &:after {
+      background: #1f4354;
+      opacity: 0.4;
+    }
+  }
+}
+.section5 {
+  h1 {
+    background: var(--primary);
+    background: url("~@/assets/img/DSC9005.jpeg") no-repeat;
+    background-size: cover;
+    background-position: 40% 60%;
+    &:after {
+      background: #1f4354;
       opacity: 0.4;
     }
   }
@@ -315,8 +395,12 @@ h1 {
     font-size: 60%;
     display: block;
     margin-top: 5px;
+    position: relative;
+    z-index: 2;
   }
-  span {
+  .ttl-inr {
+    max-width: 1000px;
+    margin: 0 auto;
     position: relative;
     z-index: 2;
     font-weight: bold;

@@ -41,9 +41,11 @@ export default {
   background: #113d6b;
   color: #fff;
   &-link {
+    max-width: 1000px;
+    margin: 0 auto;
     display: flex;
     justify-content: space-between;
-        align-items: center;
+    align-items: center;
   }
   a {
     display: inline-block;
@@ -60,7 +62,7 @@ export default {
   }
   .top {
     padding-left: 20px;
-    background: url(~@/assets/img/icon_home.svg)no-repeat;
+    background: url(~@/assets/img/icon_home.svg) no-repeat;
     background-size: contain;
     text-decoration: none;
   }

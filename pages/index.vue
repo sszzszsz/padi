@@ -116,10 +116,8 @@ export default {
 
 <style lang="scss" scoped>
 @import "../assets/style/setting";
-.wrap {
-}
 .inr {
-  background: url(~@/assets/img/9030156.jpeg) no-repeat;
+  background: url(~@/assets/img/bg_home.jpeg) no-repeat;
   background-size: cover;
   padding: 0px 0 0px;
   background-position: 80% 100%;

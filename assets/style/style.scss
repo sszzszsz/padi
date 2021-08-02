@@ -18,6 +18,7 @@ a {
 }
 .cont {
   padding: 0 10px;
+  width: 100%;
   @include mq {
     max-width: 1000px;
     margin: 0 auto;

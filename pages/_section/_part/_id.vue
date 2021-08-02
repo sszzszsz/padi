@@ -25,6 +25,9 @@
       </div>
 
       <h3>Q{{ questionData.num }}</h3>
+      <div v-if="questionData.img" class="img">
+        <img :src="requireImg(questionData.img)" alt="">
+      </div>
       <p>{{ questionData.question }}</p>
 
       <!-- 複数回答のとき -->
@@ -96,7 +99,7 @@
       </div>
 
       <div class="container mt-5 btn-list">
-        <div class="row justify-content-around">
+        <div class="row justify-content-center">
           <b-button :variant="`outline-dark`" class="col-4">
             <NuxtLink :to="getPrevLink()">
               <span>前へ</span>
@@ -129,24 +132,14 @@ export default {
       questionData: {},
       selecteds: [],
       selected: '',
-      alphabets: ['A', 'B', 'C', 'D'],
+      alphabets: ['A', 'B', 'C', 'D', 'E', 'F', 'G'],
       correctFlag: 'false',
       answerDispFlag: false,
-      answerText: ''
+      answerText: '',
+      counter: 0
     }
   },
-  computed: {
-    // answerText: () => {
-    //   console.log(this)
-    //   const answerId = this.questionData.answer
-    //   const btnList = document.querySelectorAll('.select_btn')
-    //   btnList.forEach((item) => {
-    //     if (item.getAttribute('value') === answerId) {
-    //       return item.getAttribute('data-text')
-    //     }
-    //   })
-    // }
-  },
+  computed: {},
   created () {
     this.getPartData()
     this.getquestionData()
@@ -201,9 +194,16 @@ export default {
         }
       })
     },
+    requireImg (file) {
+      return require(`~/assets/img/${file}`)
+    },
+    countClick () {
+      this.counter += 1
+    },
     chekckAnsswer () {
       console.log('chekckAnsswer')
       const THIS = this
+      // 回答が一つの場合
       if (!this.questionData.multi) {
         this.correctFlag =
           this.selected === this.questionData.answer
@@ -212,6 +212,7 @@ export default {
               ? 'null'
               : 'false'
       } else {
+        // 回答が複数の場合
         this.questionData.answerList = this.questionData.answer.split(',')
         const temp = []
         if (this.selecteds.length > 0) {
@@ -314,7 +315,7 @@ export default {
 .section0 {
   h1 {
     background: var(--primary);
-    background: url("~@/assets/img/4946417_m.jpeg") no-repeat;
+    background: url("~@/assets/img/bg_section0.jpeg") no-repeat;
     background-size: cover;
     background-position: 0% 100%;
     &:after {
@@ -326,7 +327,7 @@ export default {
 .section1 {
   h1 {
     background: var(--primary);
-    background: url("~@/assets/img/1604947.jpeg") no-repeat;
+    background: url("~@/assets/img/bg_section1.jpeg") no-repeat;
     background-size: cover;
     background-position: center right;
     &:after {
@@ -338,7 +339,7 @@ export default {
 .section2 {
   h1 {
     background: var(--primary);
-    background: url("~@/assets/img/DSC9596.jpeg") no-repeat;
+    background: url("~@/assets/img/bg_section2.jpeg") no-repeat;
     background-size: cover;
     background-position: 40% 60%;
     &:after {
@@ -350,7 +351,7 @@ export default {
 .section3 {
   h1 {
     background: var(--primary);
-    background: url("~@/assets/img/DSC1463.jpeg") no-repeat;
+    background: url("~@/assets/img/bg_section3.jpeg") no-repeat;
     background-size: cover;
     background-position: 40% 60%;
     &:after {
@@ -362,7 +363,7 @@ export default {
 .section4 {
   h1 {
     background: var(--primary);
-    background: url("~@/assets/img/aIMG_1665.jpeg") no-repeat;
+    background: url("~@/assets/img/bg_section4.jpeg") no-repeat;
     background-size: cover;
     background-position: 0% 50%;
     &:after {
@@ -374,7 +375,7 @@ export default {
 .section5 {
   h1 {
     background: var(--primary);
-    background: url("~@/assets/img/DSC9005.jpeg") no-repeat;
+    background: url("~@/assets/img/bg_section5.jpeg") no-repeat;
     background-size: cover;
     background-position: 40% 60%;
     &:after {
@@ -399,6 +400,7 @@ h1 {
     z-index: 2;
   }
   .ttl-inr {
+    display: block;
     max-width: 1000px;
     margin: 0 auto;
     position: relative;
@@ -424,7 +426,6 @@ h1 {
 h3 {
   font-size: 18px;
   border-left: 6px solid #113d6b;
-  /* border-bottom: 2px solid #113d6b; */
   padding: 0 0 4px 8px;
   margin: 20px auto;
 }
@@ -434,8 +435,18 @@ h3 {
     margin-bottom: 8px;
   }
 }
+.img {
+  width: 100%;
+  height: auto;
+  img {
+    width: 100%;
+    height: auto;
+  }
+}
 .check-btn {
   padding: 15px;
+  max-width: 500px;
+  margin: 0 auto;
   &:hover {
     background: inherit;
     color: inherit;
@@ -444,6 +455,9 @@ h3 {
 .btn-list {
   button {
     padding: 0;
+    margin: 0 10px;
+    width: 150px;
+    max-width: 200px;
     &:hover {
       background: inherit;
       color: inherit;

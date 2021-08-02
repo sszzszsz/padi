@@ -98,7 +98,7 @@
         </div>
       </div>
 
-      <div class="container mt-5 btn-list">
+      <div class="container mt-4 btn-list">
         <div class="row justify-content-center">
           <b-button :variant="`outline-dark`" class="col-4">
             <NuxtLink :to="getPrevLink()">
@@ -433,6 +433,15 @@ h3 {
 .select_list {
   li {
     margin-bottom: 8px;
+
+    /deep/.custom-control-label {
+      padding: 5px 0;
+      cursor: pointer;
+      &:before,
+      &:after {
+        top: 0.55rem;
+      }
+    }
   }
 }
 .img {
@@ -443,6 +452,7 @@ h3 {
     height: auto;
   }
 }
+
 .check-btn {
   padding: 15px;
   max-width: 500px;

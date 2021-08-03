@@ -65,6 +65,7 @@
       </div>
     </div>
     <TheFooter :top="true" />
+    <TheBubble />
   </div>
 </template>
 

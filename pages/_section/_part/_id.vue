@@ -59,7 +59,7 @@
                 :value="alphabets[index]"
                 :class="index"
                 :data-text="select"
-                @change="chekckAnsswer()"
+                @change="chekckAnswer()"
               >
                 {{ select }}
               </b-form-radio>
@@ -72,7 +72,7 @@
         block
         :variant="`outline-dark`"
         class="check-btn"
-        @click="chekckAnsswer(), dispAnswer()"
+        @click="chekckAnswer(), dispAnswer()"
       >
         <span>回答をチェック</span>
       </b-button>
@@ -100,13 +100,13 @@
 
       <div class="container mt-4 btn-list">
         <div class="row justify-content-center">
-          <b-button :variant="`outline-dark`" class="col-4">
-            <NuxtLink :to="getPrevLink()">
+          <b-button :variant="`outline-dark`" class="col-4 btn--link">
+            <NuxtLink :to="getPrevLink">
               <span>前へ</span>
             </NuxtLink>
           </b-button>
-          <b-button :variant="`outline-dark`" class="col-4">
-            <NuxtLink :to="getNextLink()">
+          <b-button :variant="`outline-dark`" class="col-4 btn--link">
+            <NuxtLink :to="getNextLink">
               <span>次へ</span>
             </NuxtLink>
           </b-button>
@@ -139,13 +139,66 @@ export default {
       counter: 0
     }
   },
-  computed: {},
+  computed: {
+    // 「前へ」ボタンのリンク先設定
+    getPrevLink () {
+      console.log('getPrevLink')
+      let section = Number(this.$route.params.section.replace('section', ''))
+      let part = Number(this.$route.params.part.replace('part', ''))
+      let num = Number(this.$route.params.id)
+
+      if (this.$route.params.id <= 1) {
+        if (part <= 1) {
+          if (section < 1) {
+            section = 0
+          } else {
+            section -= 1
+          }
+          part = 1
+        } else {
+          part -= 1
+        }
+        num = 1
+      } else {
+        num = num - 1
+      }
+      return `/section${section}/part${part}/${num}`
+    },
+    // 「次へ」ボタンのリンク先設定
+    getNextLink () {
+      console.log('getNextLink')
+      let section = Number(this.$route.params.section.replace('section', ''))
+      let part = Number(this.$route.params.part.replace('part', ''))
+      let num = Number(this.$route.params.id)
+      let link = `/section${section}/part${part}/${num}`
+      // 今の問題数を比較
+      if (this.$route.params.id >= this.partList[part].length) {
+        num = 1
+
+        if (!this.partList[part + 1]) {
+          // 次のパートが無い場合、１に戻る
+          part = 1
+          if (section >= this.sectionLen) {
+            section = 0
+          } else {
+            section += 1
+          }
+        } else {
+          part = part + 1
+        }
+      } else {
+        num = num + 1
+      }
+      link = `/section${section}/part${part}/${num}`
+      return link
+    }
+  },
   created () {
     this.getPartData()
     this.getquestionData()
   },
   mounted () {
-    this.getText()
+    this.getAnswerText()
   },
   methods: {
     getPartData () {
@@ -176,32 +229,42 @@ export default {
       })
       this.questionData = this.questionData[0]
     },
-    hideAnswer () {
-      this.answerDispFlag = false
-    },
     dispAnswer () {
       if (this.answerDispFlag === false) {
         this.answerDispFlag = true
+
+        if (this.correctFlag === 'false') {
+          this.$store.dispatch('revenge/writeRevengeList', this.questionData)
+        }
       }
     },
-    getText () {
-      console.log('getText')
-      const answerId = this.questionData.answer
+    getAnswerText () {
+      console.log('getAnswerText')
       const btnList = document.querySelectorAll('.select_btn > input')
-      btnList.forEach((item) => {
-        if (item.getAttribute('value') === answerId) {
-          this.answerText = item.getAttribute('data-text')
-        }
-      })
+
+      // 回答が一つの場合
+      if (!this.questionData.multi) {
+        const answerId = this.questionData.answer
+        btnList.forEach((item) => {
+          if (item.getAttribute('value') === answerId) {
+            this.answerText = item.getAttribute('data-text')
+          }
+        })
+      } else {
+        // 回答が複数の場合
+        const answerId = this.questionData.answer.split(',')
+        btnList.forEach((item) => {
+          if (answerId.includes(item.getAttribute('value'))) {
+            this.answerText = `${this.answerText}・${item.getAttribute('data-text')}`
+          }
+        })
+      }
     },
     requireImg (file) {
       return require(`~/assets/img/${file}`)
     },
-    countClick () {
-      this.counter += 1
-    },
-    chekckAnsswer () {
-      console.log('chekckAnsswer')
+    chekckAnswer () {
+      console.log('chekckAnswer')
       const THIS = this
       // 回答が一つの場合
       if (!this.questionData.multi) {
@@ -229,53 +292,6 @@ export default {
                 ? 'true'
                 : 'false'
       }
-    },
-    getPrevLink () {
-      console.log('getPrevLink')
-      let section = Number(this.$route.params.section.replace('section', ''))
-      let part = Number(this.$route.params.part.replace('part', ''))
-      let num = Number(this.$route.params.id)
-
-      if (this.$route.params.id <= 1) {
-        if (part <= 1) {
-          if (section < 1) {
-            section = 0
-          } else {
-            section -= 1
-          }
-          part = 1
-        } else {
-          part -= 1
-        }
-        num = 1
-      } else {
-        num = num - 1
-      }
-      return `/section${section}/part${part}/${num}`
-    },
-    getNextLink () {
-      let section = Number(this.$route.params.section.replace('section', ''))
-      let part = Number(this.$route.params.part.replace('part', ''))
-      let num = Number(this.$route.params.id)
-      // 今の問題数を比較
-      if (this.$route.params.id >= this.partList[part].length) {
-        num = 1
-
-        if (!this.partList[part + 1]) {
-          // 次のパートが無い場合、１に戻る
-          part = 1
-          if (section >= this.sectionLen) {
-            section = 0
-          } else {
-            section += 1
-          }
-        } else {
-          part = part + 1
-        }
-      } else {
-        num = num + 1
-      }
-      return `/section${section}/part${part}/${num}`
     }
   }
 }

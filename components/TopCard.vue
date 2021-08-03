@@ -9,7 +9,7 @@
       <b-card-text class="tc__sum">
         合計：{{ sectionLen }}問
       </b-card-text>
-      <b-button block :variant="`info`" class="tc__section-btn">
+      <b-button block :variant="`info`" class="tc__section-btn btn--link">
         <NuxtLink :to="`/${section}/part1/1`">
           <span>はじめる</span>
         </NuxtLink>

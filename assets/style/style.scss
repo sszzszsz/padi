@@ -33,3 +33,16 @@ a {
     }
   }
 }
+.btn--link {
+  padding: 0;
+  a {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 10px;
+    color: inherit;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}

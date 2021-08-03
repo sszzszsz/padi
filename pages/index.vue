@@ -117,11 +117,9 @@ export default {
 <style lang="scss" scoped>
 @import "../assets/style/setting";
 .inr {
-  background: url(~@/assets/img/bg_home.jpeg) no-repeat;
-  background-size: cover;
+  background: linear-gradient(0deg, #2562a0, #12a8c5);
   padding: 0px 0 0px;
-  background-position: 80% 100%;
-    &:after {
+  &:after {
     content: "";
     display: block;
     width: 100%;
@@ -131,7 +129,7 @@ export default {
     left: 0;
     bottom: 0;
     height: 100%;
-    background: #0057b5;
+    background: linear-gradient(55deg, #001d3a8f, #d2e3e680);
     opacity: 0.4;
   }
 }

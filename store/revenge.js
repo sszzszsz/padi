@@ -1,7 +1,7 @@
 // 状態管理したい要素に名前をつけて、stateとしてexportする
 export const state = () => ({
   pageName: '',
-  missList: []
+  revengeList: []
 })
 
 // 状態を変更する処理は mutationとしてexportする
@@ -9,8 +9,11 @@ export const mutations = {
   setPageName (state, value) {
     state.pageName = value
   },
-  setMissList (state, value) {
-    state.missList.push(value)
+  setRevengeList (state, value) {
+    state.revengeList.push(value)
+    // ローカルストレージに保存する
+    const storage = localStorage
+    storage.setItem('RevengeList', JSON.stringify(state.revengeList))
   }
 }
 
@@ -20,8 +23,15 @@ export const actions = {
     // コミットすることで状態変更が反映される
     context.commit('setPageName', value)
   },
-  writeMissList (context, value) {
+  writeRevengeList (context, value) {
     // コミットすることで状態変更が反映される
-    context.commit('setMissList', value)
+    context.commit('setRevengeList', value)
+  }
+}
+
+// storeからの取得
+export const getters = {
+  getRevengeList (state) {
+    return state.revengeList
   }
 }

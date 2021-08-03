@@ -61,6 +61,15 @@
               color="danger"
             />
           </li>
+          <li>
+            <TopCard
+              ttl="間違えた問題"
+              section="end"
+              :section-len="getSectionLen('section5')"
+              :section-data="sectionList['section5']"
+              color="danger"
+            />
+          </li>
         </ul>
       </div>
     </div>

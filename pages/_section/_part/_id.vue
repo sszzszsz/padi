@@ -25,62 +25,24 @@
       </div>
 
       <h3>Q{{ questionData.num }}</h3>
-      <div v-if="questionData.img" class="img">
-        <img :src="requireImg(questionData.img)" alt="">
-      </div>
-      <p>{{ questionData.question }}</p>
-
-      <!-- 複数回答のとき -->
-      <div v-if="questionData.multi === 'true'">
-        <b-form-checkbox-group v-model="selecteds">
-          <ul class="select_list">
-            <li v-for="(select, index) in questionData.select" :key="select.id">
-              <b-form-checkbox
-                class="select_btn"
-                :value="alphabets[index]"
-                :class="index"
-                :data-text="select"
-              >
-                {{ select }}
-              </b-form-checkbox>
-            </li>
-          </ul>
-        </b-form-checkbox-group>
-      </div>
-
-      <!-- 単数回答のとき -->
-      <div v-else>
-        <b-form-group>
-          <ul class="select_list">
-            <li v-for="(select, index) in questionData.select" :key="select.id">
-              <b-form-radio
-                v-model="selected"
-                class="select_btn"
-                :value="alphabets[index]"
-                :class="index"
-                :data-text="select"
-                @change="chekckAnswer()"
-              >
-                {{ select }}
-              </b-form-radio>
-            </li>
-          </ul>
-        </b-form-group>
-      </div>
+      <QuestionItem
+        :question-data="questionData"
+        @catchAnswer="changeAnswer"
+      />
 
       <b-button
         block
         :variant="`outline-dark`"
         class="check-btn"
-        @click="chekckAnswer(), dispAnswer()"
+        @click="dispAnswer()"
       >
         <span>回答をチェック</span>
       </b-button>
 
-      <div v-if="answerDispFlag" class="pt-3">
+      <div v-if="answerDispFlag" class="mt-4">
         <div v-if="correctFlag === 'true'">
           <p>正解です。</p>
-          <p class="mt-2">
+          <p>
             {{ questionData.comment }}
           </p>
         </div>
@@ -89,7 +51,7 @@
             ハズレです。<br>
             正解は【{{ answerText }}】です。
           </p>
-          <p class="mt-2">
+          <p>
             {{ questionData.comment }}
           </p>
         </div>
@@ -136,9 +98,6 @@ export default {
       partData: [],
       partLen: 0,
       questionData: {},
-      selecteds: [],
-      selected: '',
-      alphabets: ['A', 'B', 'C', 'D', 'E', 'F', 'G'],
       correctFlag: 'false',
       answerDispFlag: false,
       answerText: '',
@@ -266,38 +225,9 @@ export default {
         })
       }
     },
-    requireImg (file) {
-      return require(`~/assets/img/${file}`)
-    },
-    chekckAnswer () {
-      console.log('chekckAnswer')
-      const THIS = this
-      // 回答が一つの場合
-      if (!this.questionData.multi) {
-        this.correctFlag =
-          this.selected === this.questionData.answer
-            ? 'true'
-            : this.selected === ''
-              ? 'null'
-              : 'false'
-      } else {
-        // 回答が複数の場合
-        this.questionData.answerList = this.questionData.answer.split(',')
-        const temp = []
-        if (this.selecteds.length > 0) {
-          this.selecteds.forEach((item) => {
-            temp.push(THIS.questionData.answerList.includes(item))
-          })
-        }
-        this.correctFlag =
-          this.selecteds === ''
-            ? 'null'
-            : temp.includes(false)
-              ? 'false'
-              : temp.length === this.questionData.answerList.length
-                ? 'true'
-                : 'false'
-      }
+    changeAnswer (str) {
+      this.correctFlag = str
+      this.counter += 1
     }
   }
 }

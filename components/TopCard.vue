@@ -4,7 +4,7 @@
     :class="section"
     variant="info"
   >
-    <div>
+    <div v-if="section.indexOf('end') < 0">
       <b-card-text class="tc__sum">
         合計：{{ sectionLen }}問
       </b-card-text>
@@ -42,6 +42,17 @@
           </li>
         </ul>
       </b-collapse>
+    </div>
+    <div v-else>
+      <b-button
+        block
+        :variant="`info`"
+        class="tc__section-btn btn--link"
+      >
+        <NuxtLink :to="`/revenge/`">
+          <span>はじめる</span>
+        </NuxtLink>
+      </b-button>
     </div>
   </b-card>
 </template>

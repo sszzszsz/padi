@@ -100,12 +100,18 @@
 
       <div class="container mt-4 btn-list">
         <div class="row justify-content-center">
-          <b-button :variant="`outline-dark`" class="col-4 btn--link">
+          <b-button
+            :variant="`outline-dark`"
+            class="col-4 btn--link btn--prev"
+          >
             <NuxtLink :to="getPrevLink">
               <span>前へ</span>
             </NuxtLink>
           </b-button>
-          <b-button :variant="`outline-dark`" class="col-4 btn--link">
+          <b-button
+            :variant="`outline-dark`"
+            class="col-4 btn--link btn--next"
+          >
             <NuxtLink :to="getNextLink">
               <span>次へ</span>
             </NuxtLink>

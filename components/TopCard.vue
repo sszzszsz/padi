@@ -1,15 +1,18 @@
 <template>
-  <b-card :header="`${ttl}`" :class="section" variant="info">
-    <!-- <b-card
+  <b-card
     :header="`${ttl}`"
-    :border-variant="color"
     :class="section"
-  > -->
+    variant="info"
+  >
     <div>
       <b-card-text class="tc__sum">
         合計：{{ sectionLen }}問
       </b-card-text>
-      <b-button block :variant="`info`" class="tc__section-btn btn--link">
+      <b-button
+        block
+        :variant="`info`"
+        class="tc__section-btn btn--link"
+      >
         <NuxtLink :to="`/${section}/part1/1`">
           <span>はじめる</span>
         </NuxtLink>
@@ -26,7 +29,10 @@
       <b-collapse :id="section" class="pl-2 pr-2">
         <ul class="container pt-2">
           <li v-for="n in partLen" :key="n" class="mt-2">
-            <NuxtLink :to="`/${section}/part${n}/1`" class="row tc__part-row">
+            <NuxtLink
+              :to="`/${section}/part${n}/1`"
+              class="row tc__part-row"
+            >
               <span class="col-3 px-0"> パート{{ n }} </span>
               <span class="col-4 px-0">(合計：{{ partList[n].length }}問)</span>
               <span class="col text-right tc__part-link">
@@ -93,15 +99,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-button {
-  padding: 0;
-  a {
-    position: relative;
-    display: block;
-    width: 100%;
-    padding: 10px;
-  }
-}
 .card {
   &-header {
     font-weight: bold;

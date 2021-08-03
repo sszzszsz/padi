@@ -33,16 +33,46 @@ a {
     }
   }
 }
-.btn--link {
-  padding: 0;
-  a {
-    position: relative;
-    display: block;
-    width: 100%;
-    padding: 10px;
-    color: inherit;
-    &:hover {
-      text-decoration: none;
+.btn {
+  &--link {
+    padding: 0;
+    a {
+      position: relative;
+      display: block;
+      width: 100%;
+      padding: 10px;
+      color: inherit;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+  &--prev {
+    &::after {
+      content: "";
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-right: 2px solid;
+      border-bottom: 2px solid;
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%) rotate(135deg);
+    }
+  }
+  &--next {
+    &::after {
+      content: "";
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-right: 2px solid;
+      border-bottom: 2px solid;
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%) rotate(-45deg);
     }
   }
 }

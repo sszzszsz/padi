@@ -1,11 +1,11 @@
 <template>
   <div class="inr" :class="`${$route.params.section}`">
-    <h1>
-      <span class="ttl-inr">
+    <div class="ttl__page">
+      <h1 class="ttl__page-inr">
         <span>SECTION {{ questionData.section }}</span>
         <span class="part">PART {{ questionData.part }}</span>
-      </span>
-    </h1>
+      </h1>
+    </div>
     <main class="cont">
       <p class="progress_txt">
         {{ partData.length }}問中 {{ $route.params.id }}問目
@@ -24,7 +24,9 @@
         </ul>
       </div>
 
-      <h3>Q{{ questionData.num }}</h3>
+      <h2 class="ttl__sec">
+        Q{{ questionData.num }}
+      </h2>
       <QuestionItem
         :question-data="questionData"
         @catchAnswer="changeAnswer"
@@ -337,28 +339,12 @@ export default {
   }
 }
 h1 {
-  position: relative;
-  background: #263254;
-  color: #fff;
-  font-size: 28px;
-  padding: 20px 10px;
-  margin: 0 auto 20px;
-  width: 100%;
   .part {
     font-size: 60%;
     display: block;
     margin-top: 5px;
     position: relative;
     z-index: 2;
-  }
-  .ttl-inr {
-    display: block;
-    max-width: 1000px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 2;
-    font-weight: bold;
-    filter: drop-shadow(1px 3px 5px #555);
   }
   &:after {
     content: "";
@@ -374,14 +360,6 @@ h1 {
     opacity: 0.4;
   }
 }
-
-h3 {
-  font-size: 18px;
-  border-left: 6px solid #113d6b;
-  padding: 0 0 4px 8px;
-  margin: 20px auto;
-}
-
 .select_list {
   li {
     margin-bottom: 8px;

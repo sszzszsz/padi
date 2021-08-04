@@ -4,8 +4,14 @@
       v-for="n in 100"
       :key="n"
       class="bubble"
-      :class="`move${Math.ceil(Math.random() * 50)} pos${Math.ceil(Math.random() * 50)} scale${Math.ceil(Math.random() * 10)} stretch${Math.ceil(Math.random() * 5)} shake${Math.ceil(Math.random() * 5)} `"
-    />
+      :class="`move${Math.ceil(Math.random() * 50)} pos${Math.ceil(Math.random() * 50)}`"
+    >
+      <span :class="`stretch${Math.ceil(Math.random() * 5)}`">
+        <span class="bubble-inr" :class="`shake${Math.ceil(Math.random() * 5)}`">
+          <span :class="`scale${Math.ceil(Math.random() * 10)}`" />
+        </span>
+      </span>
+    </li>
   </ul>
 </template>
 
@@ -18,28 +24,29 @@
   width: 100%;
   overflow: hidden;
 }
-.bubble {
-  position: relative;
-  display: block;
-  width: 20px;
-  height: 20px;
-  border-radius: 100%;
-  box-shadow: 0px 0px 15px 0px rgba(255, 255, 255, 0.6) inset;
-  &:after {
-    content: "";
+.bubble-inr {
+  span {
+    position: relative;
     display: block;
-    width: 20%;
-    height: 20%;
+    width: 20px;
+    height: 20px;
     border-radius: 100%;
-    background: rgba(255, 255, 255, 0.6);
-    position: absolute;
-    right: 15%;
-    top: 15%;
-    transform: rotateZ(45deg) scaleY(0.8);
-    -webkit-transform: rotateZ(45deg) scaleY(0.8);
+    box-shadow: 0px 0px 15px 0px rgba(255, 255, 255, 0.6) inset;
+    &:after {
+      content: "";
+      display: block;
+      width: 20%;
+      height: 20%;
+      border-radius: 100%;
+      background: rgba(255, 255, 255, 0.6);
+      position: absolute;
+      right: 15%;
+      top: 15%;
+      transform: rotateZ(45deg) scaleY(0.8);
+      -webkit-transform: rotateZ(45deg) scaleY(0.8);
+    }
   }
 }
-
 /* 伸縮 */
 @keyframes stretch {
   0% {
@@ -62,7 +69,7 @@
     transform: translateX(10px);
   }
   50% {
-    transform: translateX(-10px);
+    transform: translateX(-20px);
   }
   100% {
     transform: translateX(10px);
@@ -83,10 +90,16 @@
 /*** 泡のアニメーションパターン量産(SCSS) ***/
 @for $i from 0 through 100 {
   $time: $i * 0.5;
-  $scale: $i * 0.1;
+  $scale: $i * 0.15;
+
   /* 横揺れスピード */
   .shake#{$i * 1} {
     animation: shake ($time + 2) + s ease 0s infinite normal;
+  }
+
+  /* 伸縮 */
+  .stretch#{$i * 1} {
+    animation: stretch ($time + 1) + s ease 0s infinite normal;
   }
 
   /* 移動スピード */
@@ -104,5 +117,6 @@
   .scale#{$i * 1} {
     transform: scale($scale);
   }
+
 }
 </style>

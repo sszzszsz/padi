@@ -1,14 +1,32 @@
 <template>
   <div class="inr">
-    <h1>間違えた問題一覧</h1>
+    <div class="ttl__page">
+      <h1 class="ttl__page-inr">
+        間違えた問題一覧
+      </h1>
+    </div>
     <div class="cont">
-      <ul>
+      <ul v-if="RevengeList" class="revenge-list">
         <li
           v-for="(item, index) in RevengeList"
           :key="index"
           :data-q="`${index + 1}`"
         >
-          <h3>Q{{ index + 1 }}</h3>
+          <div class="container">
+            <div class="row align-items-end">
+              <h2 class="col ttl__sec">
+                Q{{ index + 1 }}
+              </h2>
+              <b-button
+                class="col-2"
+                size="sm"
+                :variant="`secondary`"
+                @click="deleteQuestion(item.id)"
+              >
+                削除
+              </b-button>
+            </div>
+          </div>
           <p class="location mb-1">
             <b-badge variant="info">
               SECTION{{ item.section }}
@@ -54,11 +72,11 @@
         </li>
       </ul>
 
-      <b-button
-        block
-        :variant="`outline-dark`"
-        class="btn--link"
-      >
+      <div v-else class="mb-3">
+        問題がありません
+      </div>
+
+      <b-button block :variant="`outline-dark`" class="btn--link mt-5">
         <NuxtLink :to="`/`">
           <span>TOPに戻る</span>
         </NuxtLink>
@@ -90,7 +108,6 @@ export default {
           THIS.correctFlag.splice(index, 1, newValue)
         }
       })
-      console.log(this.correctFlag)
     },
     changeID (newValue, oldValue) {
       const THIS = this
@@ -99,14 +116,15 @@ export default {
           THIS.correctFlag.splice(index, 1, THIS.activeCorrectFlag)
         }
       })
-      console.log(this.correctFlag)
     }
   },
   mounted () {
     this.RevengeList = JSON.parse(localStorage.getItem('RevengeList'))
-    for (let i = 0; i < this.RevengeList.length; i++) {
-      this.correctFlag.push('null')
-      this.getAnswerText(i)
+    if (this.RevengeList) {
+      for (let i = 0; i < this.RevengeList.length; i++) {
+        this.correctFlag.push('null')
+        this.getAnswerText(i)
+      }
     }
   },
   methods: {
@@ -133,15 +151,30 @@ export default {
       }
       this.answerText.push(answerText)
     },
+    /**
+     * @description 子コンポーネントから発火されたイベント
+     * @param {String} str
+     * @param {Object} data
+     */
     changeAnswer (str, data) {
       console.log('changeAnswer', str, data.id)
       this.activeCorrectFlag = str
       this.changeID = data.id
     },
-    dispAnswer () {
-      if (this.answerDispFlag === false) {
-        this.answerDispFlag = true
-      }
+    /**
+     * @description 削除ボタン押下イベント
+     * @param {String} id
+     */
+    deleteQuestion (id) {
+      console.log(id)
+      const tempList = this.RevengeList
+      this.RevengeList.forEach((item, index) => {
+        if (item.id === id) {
+          tempList.splice(index, 1)
+        }
+      })
+      this.RevengeList = tempList
+      localStorage.setItem('RevengeList', JSON.stringify(this.RevengeList))
     }
   }
 }
@@ -149,18 +182,12 @@ export default {
 
 <style lang="scss" scoped>
 h1 {
-  background: #113d6b;
-  color: #fff;
   font-size: 24px;
-  padding: 20px 10px;
-  margin: 0 auto 20px;
-  width: 100%;
 }
-h3 {
-  font-size: 18px;
-  border-left: 6px solid #113d6b;
-  padding: 0 0 4px 8px;
-  margin: 20px auto 5px;
+.revenge-list {
+  li + li {
+    margin-top: 10px;
+  }
 }
 .location {
   font-size: 14px;

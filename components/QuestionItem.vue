@@ -14,6 +14,7 @@
               :value="alphabets[i]"
               :class="i"
               :data-text="select"
+              @change="chekckAnswer()"
             >
               {{ select }}
             </b-form-checkbox>
@@ -84,7 +85,7 @@ export default {
         const temp = []
         if (this.selecteds.length > 0) {
           this.selecteds.forEach((item) => {
-            temp.push(THIS.questionData.answerList.includes(item))
+            temp.push(THIS.answerList.includes(item))
           })
         }
         this.correctFlag =
@@ -92,7 +93,7 @@ export default {
             ? 'null'
             : temp.includes(false)
               ? 'false'
-              : temp.length === this.questionData.answerList.length
+              : temp.length === this.answerList.length
                 ? 'true'
                 : 'false'
       }

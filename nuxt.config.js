@@ -108,6 +108,7 @@ export default {
           drop_console: true
         }
       }
-    }
+    },
+    hardSource: true // <-追加
   }
 }

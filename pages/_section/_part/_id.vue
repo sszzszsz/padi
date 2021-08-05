@@ -232,6 +232,7 @@ export default {
 /deep/ .bv-no-focus-ring {
   outline-color: transparent;
   outline-width: 0px;
+  outline-style: none;
 }
 .inr {
   display: grid;

@@ -27,10 +27,7 @@
       <h2 class="ttl__sec">
         Q{{ questionData.num }}
       </h2>
-      <QuestionItem
-        :question-data="questionData"
-        @catchAnswer="changeAnswer"
-      />
+      <QuestionItem :question-data="questionData" @catchAnswer="changeAnswer" />
 
       <b-button
         block
@@ -64,18 +61,12 @@
 
       <div class="container mt-4 btn-list">
         <div class="row justify-content-center">
-          <b-button
-            :variant="`outline-dark`"
-            class="col-4 btn--link btn--prev"
-          >
+          <b-button :variant="`outline-dark`" class="col-4 btn--link btn--prev">
             <NuxtLink :to="getPrevLink">
               <span>前へ</span>
             </NuxtLink>
           </b-button>
-          <b-button
-            :variant="`outline-dark`"
-            class="col-4 btn--link btn--next"
-          >
+          <b-button :variant="`outline-dark`" class="col-4 btn--link btn--next">
             <NuxtLink :to="getNextLink">
               <span>次へ</span>
             </NuxtLink>
@@ -222,7 +213,9 @@ export default {
         const answerId = this.questionData.answer.split(',')
         btnList.forEach((item) => {
           if (answerId.includes(item.getAttribute('value'))) {
-            this.answerText = `${this.answerText}・${item.getAttribute('data-text')}`
+            this.answerText = `${this.answerText}・${item.getAttribute(
+              'data-text'
+            )}`
           }
         })
       }
@@ -236,6 +229,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.bv-no-focus-ring {
+  outline-color: transparent;
+  outline-width: 0px;
+}
 .inr {
   display: grid;
   min-height: 100vh;

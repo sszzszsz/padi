@@ -128,6 +128,7 @@ export default {
 @import "../assets/style/setting";
 .inr {
   background: linear-gradient(0deg, #2562a0, #12a8c5);
+  background: linear-gradient(320deg,#2562a0,#6bfdff);
   padding: 0px 0 0px;
   &:after {
     content: "";

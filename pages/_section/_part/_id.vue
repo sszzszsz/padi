@@ -238,7 +238,6 @@ export default {
 <style lang="scss" scoped>
 .inr {
   display: grid;
-  flex-direction: column;
   min-height: 100vh;
   width: 100%;
   grid-template-rows: 120px auto 110px;
@@ -267,7 +266,7 @@ export default {
   }
 }
 .section0 {
-  h1 {
+  .ttl__page {
     background: var(--primary);
     background: url("~@/assets/img/bg_section0.jpeg") no-repeat;
     background-size: cover;
@@ -279,7 +278,7 @@ export default {
   }
 }
 .section1 {
-  h1 {
+  .ttl__page {
     background: var(--primary);
     background: url("~@/assets/img/bg_section1.jpeg") no-repeat;
     background-size: cover;
@@ -291,7 +290,7 @@ export default {
   }
 }
 .section2 {
-  h1 {
+  .ttl__page {
     background: var(--primary);
     background: url("~@/assets/img/bg_section2.jpeg") no-repeat;
     background-size: cover;
@@ -303,7 +302,7 @@ export default {
   }
 }
 .section3 {
-  h1 {
+  .ttl__page {
     background: var(--primary);
     background: url("~@/assets/img/bg_section3.jpeg") no-repeat;
     background-size: cover;
@@ -315,7 +314,7 @@ export default {
   }
 }
 .section4 {
-  h1 {
+  .ttl__page {
     background: var(--primary);
     background: url("~@/assets/img/bg_section4.jpeg") no-repeat;
     background-size: cover;
@@ -327,7 +326,7 @@ export default {
   }
 }
 .section5 {
-  h1 {
+  .ttl__page {
     background: var(--primary);
     background: url("~@/assets/img/bg_section5.jpeg") no-repeat;
     background-size: cover;
@@ -338,13 +337,12 @@ export default {
     }
   }
 }
-h1 {
+
+.ttl__page {
   .part {
     font-size: 60%;
     display: block;
-    margin-top: 5px;
-    position: relative;
-    z-index: 2;
+    margin-top: 2px;
   }
   &:after {
     content: "";

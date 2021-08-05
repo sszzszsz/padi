@@ -37,19 +37,28 @@ a {
   &__page {
     position: relative;
     background: #263254;
-    color: #fff;
-    font-size: 28px;
-    padding: 20px 10px;
     margin: 0 auto 20px;
     width: 100%;
+
+    h1 {
+      color: #fff;
+      font-size: 28px;
+    }
+
     &-inr {
       display: block;
       max-width: 1000px;
       margin: 0 auto;
+      padding: 20px 10px;
       position: relative;
       z-index: 2;
       font-weight: bold;
-      filter: drop-shadow(1px 3px 5px #555);
+      // filter: drop-shadow(1px 3px 5px #555);
+
+      span {
+        position: relative;
+        z-index: 2;
+      }
     }
   }
 

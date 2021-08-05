@@ -76,7 +76,7 @@
         問題がありません
       </div>
 
-      <b-button block :variant="`outline-dark`" class="btn--link mt-5">
+      <b-button block :variant="`outline-dark`" class="btn--link btn--home mt-5">
         <NuxtLink :to="`/`">
           <span>TOPに戻る</span>
         </NuxtLink>
@@ -181,8 +181,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../../assets/style/setting";
+
+.inr {
+  display: grid;
+  min-height: 100vh;
+  width: 100%;
+  grid-template-rows: 100px auto 110px;
+}
 h1 {
   font-size: 24px;
+}
+.container {
+  max-width: 100%;
+  @include mq {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
 }
 .revenge-list {
   li + li {
@@ -191,5 +206,9 @@ h1 {
 }
 .location {
   font-size: 14px;
+}
+.btn--home {
+  max-width: 400px;
+  margin: 0 auto;
 }
 </style>

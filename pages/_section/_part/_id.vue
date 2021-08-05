@@ -229,7 +229,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.bv-no-focus-ring {
+/deep/ .bv-no-focus-ring {
   outline-color: transparent;
   outline-width: 0px;
 }

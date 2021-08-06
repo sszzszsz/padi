@@ -111,4 +111,8 @@ a {
       transform: translateY(-50%) rotate(-45deg);
     }
   }
+  &--home {
+    max-width: 400px;
+    margin: 0 auto;
+  }
 }

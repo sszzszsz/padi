@@ -82,6 +82,19 @@
 <script>
 import dataList from '~/assets/json/oepnwater.json'
 export default {
+  validate ({ params, query, store }) {
+    const sectionRegex = /section[0-9]/
+    const partRegex = /part[0-9]{1,2}/
+    const idRegex = /[0-9]{1,2}/
+    console.log(sectionRegex.test(params.section))
+    if (sectionRegex.test(params.section)) {
+      if (partRegex.test(params.part)) {
+        if (idRegex.test(params.id)) {
+          return true
+        }
+      }
+    }
+  },
   data () {
     return {
       data: dataList,
@@ -100,7 +113,7 @@ export default {
   computed: {
     // 「前へ」ボタンのリンク先設定
     getPrevLink () {
-      console.log('getPrevLink')
+      if (!this.$route) { return }
       let section = Number(this.$route.params.section.replace('section', ''))
       let part = Number(this.$route.params.part.replace('part', ''))
       let num = Number(this.$route.params.id)
@@ -124,7 +137,6 @@ export default {
     },
     // 「次へ」ボタンのリンク先設定
     getNextLink () {
-      console.log('getNextLink')
       let section = Number(this.$route.params.section.replace('section', ''))
       let part = Number(this.$route.params.part.replace('part', ''))
       let num = Number(this.$route.params.id)

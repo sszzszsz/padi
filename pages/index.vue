@@ -6,8 +6,8 @@
         <span>- open water試験対策 -</span>
       </h1>
       <div class="cont">
-        <div v-if="StopedData">
-          <NuxtLink :to="`${StopedData[0]}/${StopedData[1]}/${StopedData[2]}`">
+        <div v-if="stopData.length > 0">
+          <NuxtLink :to="`${stopData[0]}/${stopData[1]}/${stopData[2]}`">
             一時中断から再開
           </NuxtLink>
         </div>
@@ -91,19 +91,18 @@ export default {
       data: dataList,
       sectionList: {},
       partList: {},
-      partLen: 0
+      partLen: 0,
+      stopData: []
     }
   },
   computed: {
-    StopedData () {
-      const data = localStorage.getItem('stopID').split(',')
-      return data
-    }
   },
   created () {
     this.getSectionData()
   },
-  mounted () {},
+  mounted () {
+    this.data = localStorage.getItem('stopID').split(',')
+  },
   methods: {
     getSectionLen (section) {
       return this.sectionList[section].length

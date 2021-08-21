@@ -1,14 +1,24 @@
 <template>
   <footer class="footer">
     <div class="footer-link">
-      <a
-        href="https://www.padi.co.jp/"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="logo"
-      >
-        <img src="~/assets/img/padi-logo.png" alt="PADI">
-      </a>
+      <div>
+        <a
+          href="https://www.padi.co.jp/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="logo"
+        >
+          <img src="~/assets/img/padi-logo.png" alt="PADI">
+        </a>
+        <a
+          href="https://sea-drop.net/hayamadivers/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="logo hayama"
+        >
+          <img src="~/assets/img/logo_hayama_divers.png" alt="">
+        </a>
+      </div>
       <NuxtLink v-if="!top" :to="`/`" class="top">
         <span>TOP</span>
       </NuxtLink>
@@ -59,6 +69,12 @@ export default {
       width: 100%;
       height: auto;
     }
+  }
+  .hayama {
+    margin-left: 10px;
+    background: #fff;
+    width: 100px;
+    padding: 5px;
   }
   .top {
     padding-left: 20px;

@@ -72,6 +72,11 @@
             </NuxtLink>
           </b-button>
         </div>
+        <div class="row justify-content-center">
+          <p class="col text-center mt-3">
+            <u @click="stop()">一時中断</u>
+          </p>
+        </div>
       </div>
     </main>
 
@@ -82,6 +87,10 @@
 <script>
 import dataList from '~/assets/json/oepnwater.json'
 export default {
+  /**
+  * ページの存在チェック
+  * @param {Object} params
+  */
   validate ({ params, query, store }) {
     const sectionRegex = /section[0-9]/
     const partRegex = /part[0-9]{1,2}/
@@ -111,9 +120,10 @@ export default {
     }
   },
   computed: {
-    // 「前へ」ボタンのリンク先設定
+    /**
+     * 「前へ」ボタンのリンク先設定
+     */
     getPrevLink () {
-      if (!this.$route) { return }
       let section = Number(this.$route.params.section.replace('section', ''))
       let part = Number(this.$route.params.part.replace('part', ''))
       let num = Number(this.$route.params.id)
@@ -135,7 +145,9 @@ export default {
       }
       return `/section${section}/part${part}/${num}`
     },
-    // 「次へ」ボタンのリンク先設定
+    /**
+     * 「次へ」ボタンのリンク先設定
+     */
     getNextLink () {
       let section = Number(this.$route.params.section.replace('section', ''))
       let part = Number(this.$route.params.part.replace('part', ''))
@@ -146,7 +158,7 @@ export default {
         num = 1
 
         if (!this.partList[part + 1]) {
-          // 次のパートが無い場合、１に戻る
+          // 次のパートが無い場合、1に戻る
           part = 1
           if (section >= this.sectionLen) {
             section = 0
@@ -171,6 +183,9 @@ export default {
     this.getAnswerText()
   },
   methods: {
+    /**
+     * 各section、partごとにデータを整形する
+     */
     getPartData () {
       const THIS = this
       const sectionNum = this.$route.params.section.replace('section', '')
@@ -190,6 +205,9 @@ export default {
         THIS.partList[`${obj.part}`].push(obj)
       })
     },
+    /**
+     * URLに基づいて該当の問題データを取得する
+     */
     getquestionData () {
       const THIS = this
       const partNum = Number(this.$route.params.part.replace('part', ''))
@@ -199,6 +217,10 @@ export default {
       })
       this.questionData = this.questionData[0]
     },
+    /**
+     * 回答をチェックボタン押下時の処理
+     * 初回押下時に不正解だとstoreに記録される
+     */
     dispAnswer () {
       if (this.answerDispFlag === false) {
         this.answerDispFlag = true
@@ -208,6 +230,9 @@ export default {
         }
       }
     },
+    /**
+     * 問題の解答文を取得する
+     */
     getAnswerText () {
       console.log('getAnswerText')
       const btnList = document.querySelectorAll('.select_btn > input')
@@ -232,9 +257,22 @@ export default {
         })
       }
     },
+    /**
+     * 選択肢変更時に発火
+     * @description 子コンポーネントから発火されたイベント
+     * @param {String} str true,false,nullの文字列
+     *
+     */
     changeAnswer (str) {
       this.correctFlag = str
       this.counter += 1
+    },
+    /**
+     * 一時中断時
+     */
+    stop () {
+      localStorage.setItem('stopID', `${this.$route.params.section},${this.$route.params.part},${this.$route.params.id}`)
+      this.$router.push('/')
     }
   }
 }

@@ -101,6 +101,10 @@ export default {
   },
   computed: {},
   watch: {
+    /**
+     * changeイベントが発火して値が変更される度に
+     * 各問題ごとの正解/不正解を管理している配列(correctFlag)の該当indexの値を更新する
+     */
     activeCorrectFlag (newValue, oldValue) {
       const THIS = this
       this.RevengeList.forEach((item, index) => {
@@ -109,6 +113,10 @@ export default {
         }
       })
     },
+    /**
+     * 解答する問題が変更された場合も、
+     * 各問題ごとの正解/不正解を管理している配列(correctFlag)の該当indexの値を更新する
+     */
     changeID (newValue, oldValue) {
       const THIS = this
       this.RevengeList.forEach((item, index) => {
@@ -128,6 +136,9 @@ export default {
     }
   },
   methods: {
+    /**
+     * 問題の解答文を取得する
+     */
     getAnswerText (i) {
       console.log('getAnswerText')
       const THIS = this
@@ -152,9 +163,11 @@ export default {
       this.answerText.push(answerText)
     },
     /**
-     * @description 子コンポーネントから発火されたイベント
+     * 各問題の選択肢のchangeイベント
+     * 引数は子から引き継がれているため、どの問題に対して変更があったのか判断できない。
+     * そのため、どの問題に対してのchangeなのかを判定するためのidを更新している。
      * @param {String} str
-     * @param {Object} data
+     * @param {Object} data.id 各問題固有の数字
      */
     changeAnswer (str, data) {
       console.log('changeAnswer', str, data.id)
@@ -162,7 +175,8 @@ export default {
       this.changeID = data.id
     },
     /**
-     * @description 削除ボタン押下イベント
+     * 削除ボタン押下イベント
+     * @description 間違えた問題リストから削除する
      * @param {String} id
      */
     deleteQuestion (id) {

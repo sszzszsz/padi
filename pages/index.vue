@@ -6,6 +6,11 @@
         <span>- open water試験対策 -</span>
       </h1>
       <div class="cont">
+        <div v-if="StopedData">
+          <NuxtLink :to="`${StopedData[0]}/${StopedData[1]}/${StopedData[2]}`">
+            一時中断から再開
+          </NuxtLink>
+        </div>
         <ul class="card-list">
           <li>
             <TopCard
@@ -87,6 +92,12 @@ export default {
       sectionList: {},
       partList: {},
       partLen: 0
+    }
+  },
+  computed: {
+    StopedData () {
+      const data = localStorage.getItem('stopID').split(',')
+      return data
     }
   },
   created () {
